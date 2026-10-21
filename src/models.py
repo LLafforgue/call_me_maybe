@@ -1,11 +1,13 @@
 from pydantic import BaseModel, Field, model_validator
-from errors import CallJsonError
+from .errors import CallJsonError
 
 class FunctionDefinition(BaseModel):
     """Model representing a function definition."""
-    name: str = Field(..., description="The name of the function.")
-    description: str = Field(..., description="A brief description of the function.")
-    parameters: dict = Field(..., description="A dictionary of parameters for the function.")
+    name: str = Field(min_length=1, description="The name of the function.")
+    description: str = Field(min_length=1,
+                             description="A brief description of the function.")
+    parameters: dict = Field(min_length=1,
+                             description="A dictionary of parameters for the function.")
 
     @model_validator(mode="before")
     def function_validator(cls, values: dict) -> dict:
