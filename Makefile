@@ -1,9 +1,6 @@
 NAME		= call_me_maybe
-
-# --- Stockage dans le goinfre (le home 42 est limite en quota) ---------------
-# Surchargeable : make install GOINFRE=/goinfre/autre_login
 GOINFRE		?= /goinfre/llafforg
-
+TARGET =  src
 export UV_PROJECT_ENVIRONMENT	?= $(GOINFRE)/$(NAME)/venv
 export UV_CACHE_DIR		?= $(GOINFRE)/uv-cache
 export UV_LINK_MODE		?= copy
@@ -15,8 +12,6 @@ EXCLUDES	= llm_sdk,.venv,.git,__pycache__
 
 all: install run
 
-# Cree le venv dans le goinfre et laisse un lien .venv dans le projet
-# (pour que uv / les IDE le retrouvent sans rien configurer).
 install:
 	@mkdir -p $(dir $(VENV)) $(UV_CACHE_DIR) $(HF_HOME)
 	@if [ -d .venv ] && [ ! -L .venv ]; then rm -rf .venv; fi
@@ -24,16 +19,15 @@ install:
 	@ln -sfn $(VENV) .venv
 
 run:
-	uv run python -m src
+	uv run python -m $(TARGET)
 
 debug:
-	uv run python -m pdb -m src
+	uv run python -m pdb -m $(TARGET)
 
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	rm -rf .mypy_cache
 
-# Supprime aussi le venv du goinfre (le cache uv et le modele HF sont conserves)
 fclean: clean
 	rm -rf $(VENV) .venv
 
