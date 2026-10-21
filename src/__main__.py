@@ -1,6 +1,6 @@
 import argparse
 from pathlib import Path
-from src.json_tester import load_json
+from src.loader import load_json
 
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments.
