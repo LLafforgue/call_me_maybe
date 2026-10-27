@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field, model_validator
-from .errors import CallJsonError
+from .errors import CallJsonError, format_validation_error
+
 
 class FunctionDefinition(BaseModel):
     """Model representing a function definition."""

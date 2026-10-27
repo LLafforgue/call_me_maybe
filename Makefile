@@ -1,10 +1,10 @@
 NAME		= call_me_maybe
-GOINFRE		?= /goinfre/llafforg
+GOINFRE		?= C:\Users\laflu\Desktop
 TARGET =  src
-export UV_PROJECT_ENVIRONMENT	?= $(GOINFRE)/$(NAME)/venv
-export UV_CACHE_DIR		?= $(GOINFRE)/uv-cache
+export UV_PROJECT_ENVIRONMENT	?= $(GOINFRE)\$(NAME)\venv
+export UV_CACHE_DIR		?= $(GOINFRE)\uv-cache
 export UV_LINK_MODE		?= copy
-export HF_HOME			?= $(GOINFRE)/huggingface
+export HF_HOME			?= $(GOINFRE)\huggingface
 
 VENV		= $(UV_PROJECT_ENVIRONMENT)
 LINT_TOOLS	= --with flake8 --with mypy
