@@ -1,5 +1,5 @@
 from typing import Literal, Annotated
-from pydantic import BaseModel, Field, model_validator, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, field_validator
 
 
 class ParamSpec(BaseModel):
@@ -16,7 +16,7 @@ class FunctionDefinition(BaseModel):
                              description="A brief description of the function."
                              )
     parameters: dict[
-        Annotated[str, Field(pattern=r"[a-z_]+")],
+        Annotated[str, Field(pattern=r"^[A-Za-z_][A-Za-z0-9_]*$")],
         ParamSpec
     ] = Field(min_length=1,
               description="A dictionary of parameters for the function.")
@@ -26,3 +26,12 @@ class FunctionDefinition(BaseModel):
 class PromptItem(BaseModel):
     """"""
     prompt: str = Field(min_length=1)
+
+    @field_validator('prompt', mode='before')
+    def strip_v(value: str) -> str:
+        return value.strip()
+
+
+class FunctionCall(BaseModel):
+    """"""
+

@@ -26,11 +26,13 @@ class CallJsonError(Exception):
         super().__init__(self.message)
 
 
-def format_validation_error(src: str, err: ValidationError) -> CallJsonError:
+def format_validation_error(src: str,
+                            err: ValidationError,
+                            key: str) -> CallJsonError:
     """Turn a pydantic ValidationError into a readable CallJsonError."""
     lines: list = []
     for e in err.errors():
         location = ".".join([str(loc) for loc in e["loc"]]) or "root"
         lines.append(f" - {location}: {e["msg"]}")
     return CallJsonError(f"Invalid {src}:\n" + "\n".join(lines),
-                         "FunctionsModelError")
+                         key)

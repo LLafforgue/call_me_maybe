@@ -1,6 +1,6 @@
 import argparse
 from pathlib import Path
-from src.loader import load_json, load_functions
+from src.loader import load_prompts, load_functions
 from .errors import CallJsonError
 
 def parse_args() -> argparse.Namespace:
@@ -42,7 +42,7 @@ def main() -> None:
     args = parse_args()
     try:
         load_functions(args.functions_definition)
-
+        load_prompts(args.input)
     except (CallJsonError) as e:
         print(e)
 
