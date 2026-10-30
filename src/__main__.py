@@ -1,6 +1,7 @@
 import argparse
 from pathlib import Path
-from src.loader import load_json
+from src.loader import load_json, load_functions
+from .errors import CallJsonError
 
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments.
@@ -39,11 +40,10 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     """Run the command-line application."""
     args = parse_args()
-
     try:
-        load = load_json(args.input)
-        print(load)
-    except (FileNotFoundError) as e:
+        load_functions(args.functions_definition)
+
+    except (CallJsonError) as e:
         print(e)
 
 
