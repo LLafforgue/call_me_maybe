@@ -2,6 +2,8 @@ import argparse
 from pathlib import Path
 from src.loader import load_prompts, load_functions
 from .errors import CallJsonError
+from .llm_manager import Manage_llm
+
 
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments.
@@ -41,8 +43,11 @@ def main() -> None:
     """Run the command-line application."""
     args = parse_args()
     try:
-        load_functions(args.functions_definition)
-        load_prompts(args.input)
+        fcts = load_functions(args.functions_definition)
+        prompts: list = load_prompts(args.input)
+        call_me_maybe = Manage_llm(fcts)
+        call_me_maybe.encode_prompts(prompts)
+        call_me_maybe.get_logits(call_me_maybe.ids_prompts[0])
     except (CallJsonError) as e:
         print(e)
 

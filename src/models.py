@@ -28,10 +28,14 @@ class PromptItem(BaseModel):
     prompt: str = Field(min_length=1)
 
     @field_validator('prompt', mode='before')
-    def strip_v(value: str) -> str:
+    @classmethod
+    def strip_v(cls, value: str) -> str:
         return value.strip()
 
 
 class FunctionCall(BaseModel):
     """"""
-
+    prompt: str
+    name: str
+    parameters: dict[str, int | float | str | bool]
+    # extra = "forbid"

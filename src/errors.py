@@ -7,7 +7,8 @@ class CallJsonError(Exception):
     ERRORS: dict = {
         "PromptError": "Not available prompt format.",
         "ParsingError": "Error during parsing",
-        "FunctionsModelError": "Invalid function model"
+        "FunctionsModelError": "Invalid function model",
+        "LLMError": "Manager failed"
     }
 
     def __init__(self,
@@ -16,13 +17,13 @@ class CallJsonError(Exception):
         """Initialize the CallJsonError with a message."""
         if key and key in (keys for keys in self.ERRORS):
             if msg:
-                self.message = f"\033[1;35m{key}\033[0m: {msg}"
+                self.message = f"\033[1;36m{key}\033[0m: {msg}"
             else:
-                self.message = f"\033[1;35m{key}\033[0m: {self.ERRORS[key]}"
+                self.message = f"\033[1;36m{key}\033[0m: {self.ERRORS[key]}"
         elif msg:
-            self.message = f"\033[35m{msg}\033[0m\n"
+            self.message = f"\033[36m{msg}\033[0m\n"
         else:
-            self.message = "\033[35mUnknown Error\033[0m\n"
+            self.message = "\033[36mUnknown Error\033[0m\n"
         super().__init__(self.message)
 
 
